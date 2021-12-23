@@ -39,6 +39,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Locale;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
     public EditText textView;
@@ -58,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
     public TextToSpeech textToSpeech;
 
     public MediaPlayer mMediaPlayer;
-
     public BarVisualizer mVisualizer;
+
 
 
     /**
@@ -245,16 +247,18 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
-        //TODO 4: aded here fxn
+        /** TODO 1b : Add java Functionality here
+         * WaveView add
+         */
         //get reference to visualizer
         mVisualizer = findViewById(R.id.blast);
+
+        //TODO: init MediaPlayer and play the audio
 
         //get the AudioSessionId from your MediaPlayer and pass it to the visualizer
         int audioSessionId = mMediaPlayer.getAudioSessionId();
         if (audioSessionId != -1)
             mVisualizer.setAudioSessionId(audioSessionId);
-
 
     }
 
@@ -266,7 +270,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        mMediaPlayer.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         releaseMediaPlayer();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(VIEWS_ANIMATION_FLAG==210)
+        mMediaPlayer.start();
     }
 
     /**
@@ -375,21 +392,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         animate(introTextView, 4);
+                        VIEWS_ANIMATION_FLAG = 250;
                     }
                 }, 600);
+
             }
         }, 15000);
-        VIEWS_ANIMATION_FLAG = 250;
+
     }
-
-    //TODO 5: added visualizer release method
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mVisualizer != null)
-            mVisualizer.release();
-    }
-
-
-
 }

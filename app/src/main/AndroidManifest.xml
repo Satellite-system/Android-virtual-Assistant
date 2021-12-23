@@ -16,11 +16,6 @@
         android:theme="@android:style/Theme.NoTitleBar"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" -->
         <activity
-            android:name=".Noheader"
-            android:exported="false"
-            android:label="@string/title_activity_noheader"
-            android:theme="@style/Theme.Apex.NoActionBar" />
-        <activity
             android:name=".introduction"
             android:exported="false" />
         <activity

@@ -146,24 +146,6 @@
         android:visibility="visible"
         app:layout_constraintGuide_percent="0.71" />
 
-
-    <!-- TODO 3: added visulaiser here -->
-    <com.gauravk.audiovisualizer.visualizer.BarVisualizer
-        android:id="@+id/blast"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="28dp"
-        app:avColor="@color/teal_200"
-        app:avDensity="0.8"
-        app:avSpeed="normal"
-        app:avType="fill"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.957"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.678" />
-
     <!-- Stores Battery percentage   -->
     <TextView
         android:id="@+id/batteryTextView"
@@ -192,5 +174,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.gauravk.audiovisualizer.visualizer.BarVisualizer
+        android:id="@+id/blast"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        app:avColor="@color/teal_200"
+        app:avDensity="0.8"
+        app:avSpeed="normal"
+        app:avType="fill"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

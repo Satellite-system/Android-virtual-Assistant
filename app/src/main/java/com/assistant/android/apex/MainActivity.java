@@ -1,19 +1,11 @@
 package com.assistant.android.apex;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.BatteryManager;
@@ -25,22 +17,21 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.transition.Fade;
-import android.transition.Slide;
 import android.transition.Transition;
 import android.transition.TransitionManager;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
-import com.ms_square.debugoverlay.DebugOverlay;
 import com.ms_square.debugoverlay.DebugOverlay;
 
 import java.io.UnsupportedEncodingException;
@@ -69,9 +60,6 @@ public class MainActivity extends AppCompatActivity {
     public MediaPlayer mMediaPlayer;
 
     public BarVisualizer mVisualizer;
-
-    private Sensor temp;
-    private SensorManager sensorManager;
 
 
     /**
@@ -273,20 +261,6 @@ public class MainActivity extends AppCompatActivity {
     private void speak(){
         String text = String.valueOf(textView.getText());
         textToSpeech.speak(text,TextToSpeech.QUEUE_FLUSH,null);
-    }
-
-    @Override
-    protected void onResume() {
-        // Register a listener for the sensor.
-        super.onResume();
-        sensorManager.registerListener((SensorEventListener) this, temp, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
-    @Override
-    protected void onPause() {
-        // Be sure to unregister the sensor when the activity pauses.
-        super.onPause();
-        sensorManager.unregisterListener((SensorEventListener) this);
     }
 
     @Override

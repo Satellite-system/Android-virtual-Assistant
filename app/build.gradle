@@ -36,11 +36,7 @@ android {
 
 dependencies {
 
-    //TODO 1 : Add Music/Audio Visualizer
-    implementation 'com.gauravk.audiovisualizer:audiovisualizer:0.9.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.testng:testng:6.9.6'
+
 
     //TODO 2a : Second library added
     debugImplementation 'com.ms-square:debugoverlay:1.1.3'

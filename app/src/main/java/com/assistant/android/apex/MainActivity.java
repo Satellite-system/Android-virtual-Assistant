@@ -1,6 +1,7 @@
 package com.assistant.android.apex;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,14 +32,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 import com.ms_square.debugoverlay.DebugOverlay;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Locale;
-
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
     public TextToSpeech textToSpeech;
 
     public MediaPlayer mMediaPlayer;
-    public BarVisualizer mVisualizer;
 
 
 
@@ -68,16 +67,17 @@ public class MainActivity extends AppCompatActivity {
      * Device battery status
      * @param savedInstanceState
      */
-    private BroadcastReceiver mBatInfoReciever = new BroadcastReceiver() {
+    private final BroadcastReceiver mBatInfoReciever = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
             int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE,-1);
             int battryPrcnt = level*100/scale;
-            batteryTxt.setText(String.valueOf(battryPrcnt)+"%");
+            batteryTxt.setText(battryPrcnt +"%");
         }
     };
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO 2b: cpu.ram,memory usage
         DebugOverlay.with(getApplication()).install();
 
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         textView = (EditText) findViewById(R.id.textView);
         speakBtn = (Button) findViewById(R.id.speakButton);
@@ -183,23 +183,20 @@ public class MainActivity extends AppCompatActivity {
         /**
          * recognises voice while one holds the micImage_view
          */
-        micImageView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()){
-                    case MotionEvent.ACTION_UP:
-                        mSpeechRecognizer.stopListening();
-                        textView.setHint("You will see input Voice here");
-                        break;
+        micImageView.setOnTouchListener((view, motionEvent) -> {
+            switch (motionEvent.getAction()){
+                case MotionEvent.ACTION_UP:
+                    mSpeechRecognizer.stopListening();
+                    textView.setHint("You will see input Voice here");
+                    break;
 
-                    case MotionEvent.ACTION_DOWN:
-                        mSpeechRecognizer.startListening(mRecognizerIntent);
-                        textView.setText("");
-                        textView.setHint("Listening.....");
-                        break;
-                }
-                return false;
+                case MotionEvent.ACTION_DOWN:
+                    mSpeechRecognizer.startListening(mRecognizerIntent);
+                    textView.setText("");
+                    textView.setHint("Listening.....");
+                    break;
             }
+            return false;
         });
 
 
@@ -247,18 +244,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        /** TODO 1b : Add java Functionality here
-         * WaveView add
-         */
-        //get reference to visualizer
-        mVisualizer = findViewById(R.id.blast);
-
-        //TODO: init MediaPlayer and play the audio
-
-        //get the AudioSessionId from your MediaPlayer and pass it to the visualizer
-        int audioSessionId = mMediaPlayer.getAudioSessionId();
-        if (audioSessionId != -1)
-            mVisualizer.setAudioSessionId(audioSessionId);
 
     }
 
@@ -310,26 +295,29 @@ public class MainActivity extends AppCompatActivity {
         String speak = String.valueOf(textView.getText());
         speak = speak.toLowerCase();
         if(speak.contains("your name")){
-            textToSpeech.speak("My Name is Apex, and i am your virtual assistant",TextToSpeech.QUEUE_FLUSH,null);
-//            mVisualizer.setRawAudioBytes();
-//            Toast.makeText(this,"Ypr nsmr",Toast.LENGTH_SHORT).show();
+            String Unique_Identifer_id = "name";
+            textToSpeech.speak("My Name is Apex, and i am your virtual assistant",TextToSpeech.QUEUE_FLUSH,null,Unique_Identifer_id);
         }
         else if(speak.contains("camera")){
-            textToSpeech.speak("Opening Your Camera",TextToSpeech.QUEUE_FLUSH,null);
+            String Unique_Identifer_id = "camera";
+            textToSpeech.speak("Opening Your Camera",TextToSpeech.QUEUE_FLUSH,null,Unique_Identifer_id);
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent,CAMERA_APP_OPEN_CODE);
+            startActivity(intent);
         }
-        else if(speak.contains("other")){
-            textToSpeech.speak("Opening other",TextToSpeech.QUEUE_FLUSH,null);
-//            Intent intent = new Intent(this,Intent.ACTION_DIAL);
-//            startActivityForResult(intent,CAMERA_APP_OPEN_CODE);
+        else if(speak.contains("open other")){
+            String Unique_Identifer_id = "other";
+            textToSpeech.speak("Opening other",TextToSpeech.QUEUE_FLUSH,null,Unique_Identifer_id);
+//            Intent intent = new Intent(Conta);
+//            startActivityForResult(intent,);
         }
         else if(speak.equals("hi")|| speak.equals("hello")){
-            textToSpeech.speak(speak + " sir.How are you? ",TextToSpeech.QUEUE_FLUSH,null);
+            String Unique_Identifer_id = "hi";
+            textToSpeech.speak(speak + " sir.How are you? ",TextToSpeech.QUEUE_FLUSH,null,Unique_Identifer_id);
             textView.setText(speak + " sir");
         }
         else if(speak.equals("fine") || speak.equals("good")){
-            textToSpeech.speak("It's good to know that.How can i help you?",TextToSpeech.QUEUE_FLUSH,null);
+            String Unique_Identifer_id = "good";
+            textToSpeech.speak("It's good to know that.How can i help you?",TextToSpeech.QUEUE_FLUSH,null,Unique_Identifer_id);
         }
         else if(speak.contains("wikipedia")){
             String escapedQuery = URLEncoder.encode(speak, "UTF-8");

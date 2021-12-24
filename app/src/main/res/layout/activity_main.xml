@@ -14,6 +14,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint=""
         android:inputType="none"
         android:textColor="@color/teal_200"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -173,15 +174,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.gauravk.audiovisualizer.visualizer.BarVisualizer
-        android:id="@+id/blast"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        app:avColor="@color/teal_200"
-        app:avDensity="0.8"
-        app:avSpeed="normal"
-        app:avType="fill"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
